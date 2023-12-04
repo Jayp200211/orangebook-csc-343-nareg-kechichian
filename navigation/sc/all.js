@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, ScrollView, StyleSheet, Image, View, Modal, TouchableHighlight, ImageBackground} from 'react-native';
 import Constants from 'expo-constants';
-import bookInfo from './file/movieHomeInfo';
+import bookInfo from './file/movieHomeInfo'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const books = bookInfo;
@@ -26,7 +26,10 @@ const HomeBook = () => {
   const Show = () =>
     books.map((book, index) => (
       <View>
-        <TouchableHighlight onPress={() => handleIt(book, setName, setXname, setImage, setAuthor, setDetails, setModalVisible)}>
+        <TouchableHighlight
+        onPress={() => handleIt(book, setName, setXname, setImage, setAuthor, setDetails, setModalVisible)}
+underlayColor="transparent"
+      >
           <Image
             source={{ uri: book.image }}
             style={{
@@ -36,15 +39,13 @@ const HomeBook = () => {
             accessibilityLabel={book.name}
           />
         </TouchableHighlight>
-        <View style={{width:120,paddingLeft:5}}>
-          <Text style={styles.title}>{book.name}</Text>
-        </View>
+       
       </View>
     ));
 
   return (
     <View style={styles.container}>
-      <ScrollView horizontal={true}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <Show />
       </ScrollView>
       <Modal
@@ -61,7 +62,7 @@ const HomeBook = () => {
               <MaterialIcons name="arrow-back" size={30} color="black" />
             </TouchableHighlight>
        <ScrollView>
-       <View style={{ flex: 1 }}>
+       <View style={{ flex: 1 ,height:400}}>
   <ImageBackground
     source={{ uri: image }}
     style={{
@@ -78,16 +79,21 @@ const HomeBook = () => {
     </View>
   </ImageBackground>
 </View>
-            <View style={{padding:10,marginTop:10}}>
-            <View style={{borderBottomColor:'orange',borderBottomWidth:4,width:130,alignSelf:'center'}}/>
+           
+<View style={{
+  padding: 10,
+  backgroundColor: 'black',
+  borderTopLeftRadius: 30,
+  borderTopRightRadius: 30,
+}}>
+              <View style={{padding:10,marginTop:10}}>
+            {/* <View style={{borderBottomColor:'orange',borderBottomWidth:4,width:130,alignSelf:'center'}}/> */}
             <Text style={styles.titleMod}>{xname}</Text>
-            <View style={{alignItems:'center'}}>
-              <Text>By </Text>
-              <Text style={styles.author}>{author}</Text>
+            <View>
+              <Text style={styles.author}> By {author}</Text>
             </View>
             </View>
-            <View style={{padding:10, backgroundColor:'rgb(240,240,240)',borderRadius:20,}}>
-            <Text style={styles.desc}>Description</Text> 
+            <Text style={styles.desc}>About the book</Text> 
             <Text style={styles.details}>{details}</Text>
             </View>
          </ScrollView>
@@ -99,31 +105,40 @@ const HomeBook = () => {
 
 const styles=StyleSheet.create({
   container:{
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: 8,
   },
+
   modalContainer: {
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom:40,
     backgroundColor: 'white',
-    flex:1,
   },
   title:{
     fontSize:15,
     fontWeight:'600',
   },
   titleMod:{
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign:'center',
+    fontSize: 24,
+    fontWeight: '700',
+    paddingLeft:10,
+    color: '#1DB954',
+  },
+   noElevation: {
+    elevation: 0,
   },
   author:{
-    fontSize: 22,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: 'orange',
-    textAlign:'center',
+    color: 'grey',
+    paddingTop:10,
+    paddingLeft:10,
+
   },
   details:{
     textAlign:'center',
-    fontSize: 18,
+    fontSize: 16,
+    lineHeight:24,
+    color: 'white',
   },
   back:{
     borderRadius:30,
@@ -135,8 +150,10 @@ const styles=StyleSheet.create({
   desc:{
     fontSize: 22,
     fontWeight: 'bold',
-    textAlign:'center',
     marginBottom: 10,
+    paddingTop:20,
+    paddingLeft:20,
+    color:'#1DB954',
   }
 })
 export default HomeBook;

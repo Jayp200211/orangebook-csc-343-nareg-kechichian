@@ -3,9 +3,9 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreen from './sc/Home';
+import HomeScreen from './sc/HomeStackCat';
 import Bookmarks from './sc/BookNav';
-import Library from './sc/LibNav';
+import Search from './sc/LibNav';
 import Profile from './sc/profStack';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
@@ -13,14 +13,14 @@ import 'firebase/compat/firestore';
 
 const homeName = 'Home';
 const bookmarks = 'Bookmarks';
-const library = 'Library';
+const search = 'Search';
 const profile ='Profile'; 
 const Tab = createBottomTabNavigator();
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
@@ -57,33 +57,44 @@ const MainContainer = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-      const uid = firebase.auth().currentUser.uid;
-      const notRef = firebase.database().ref(`users/${uid}/Notifications`);
-      notRef.push({
-        title: notification.request.content.title,
-        body: notification.request.content.body,
-      });
-    });
+    notificationListener.current = Notifications.addNotificationReceivedListener(async (notification) => {
 
+      setNotification(notification);
+      // Check if the user is authenticated
+      const user = firebase.auth().currentUser;
+      if (user) {
+        const uid = user.uid;
+
+        const notRef = firebase.database().ref(`users/${uid}/Notifications`);
+        notRef.push({
+          title: notification.request.content.title,
+          body: notification.request.content.body,
+        });
+      } else {
+        console.log('User is not authenticated. Handle it accordingly.');
+      }
+    });
+  
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       console.log(response);
     });
-
+  
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-
+  
   async function schedulePushNotification() {
+
     await Notifications.scheduleNotificationAsync({
+
       content: {
         title: "You've got mail! 📬",
-        body: 'Welcome to OrangeBook',
+        body: 'Welcome to NovelQuest',
       },
       trigger: { seconds: 2 },
+
     });
   }
 
@@ -91,6 +102,7 @@ const MainContainer = () => {
     let token;
 
     if (Platform.OS === 'android') {
+
       await Notifications.setNotificationChannelAsync('default', {
         name: 'default',
         importance: Notifications.AndroidImportance.MAX,
@@ -100,6 +112,7 @@ const MainContainer = () => {
     }
 
     if (Device.isDevice) {
+
       const { status: existingStatus } = await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
       if (existingStatus !== 'granted') {
@@ -107,11 +120,13 @@ const MainContainer = () => {
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {
+        console.log("hello");
+
         alert('Failed to get push token for push notification!');
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+      console.log("hello");
     } else {
       alert('Must use physical device for Push Notifications');
     }
@@ -130,8 +145,8 @@ const MainContainer = () => {
                 iconName = focused ? 'home' : 'home-outline';
               } else if (route.name === bookmarks) {
                 iconName = focused ? 'bookmark' : 'bookmark-outline';
-              } else if (route.name === library) {
-                iconName = focused ? 'library' : 'library-outline';
+              } else if (route.name === search) {
+                iconName = focused ? 'search' : 'search-outline';
               }
               else if(route.name===profile){
                 iconName =focused? 'person':'person-outline';
@@ -148,7 +163,7 @@ const MainContainer = () => {
         >
           <Tab.Screen name={homeName} component={HomeScreen}   options={{ headerShown: false }}
   />
-          <Tab.Screen name={library} component={Library}   options={{ headerShown: false }}
+          <Tab.Screen name={search} component={Search}   options={{ headerShown: false }}
  />
           <Tab.Screen name={bookmarks} component={Bookmarks}   options={{ headerShown: false }}
  />

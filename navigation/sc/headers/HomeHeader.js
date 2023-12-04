@@ -23,7 +23,7 @@ const Bar=({navigation})=>{
         <TouchableOpacity onPress={openDrawer}>
           <Ionicons name="menu" size={30} color="black" />
         </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Books.io</Text>
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>NovelQuest</Text>
         <TouchableOpacity onPress={navigateToNotification}>
           <Ionicons name="notifications" size={30} color="black" />
         </TouchableOpacity>
@@ -54,7 +54,7 @@ const Bar=({navigation})=>{
           };
         }}
       >
-        <Drawer.Screen name="OrangeBook" component={MainContainer}/>
+        <Drawer.Screen name="NovelQuest" component={MainContainer}/>
         
       </Drawer.Navigator>
     );

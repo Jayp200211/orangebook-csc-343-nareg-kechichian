@@ -6,30 +6,73 @@ const Search = ({ route, navigation }) => {
   const [search, setSearch] = useState('');
   const [books, setBooks] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const {book} = route.params;
+  const [selectedCategory, setSelectedCategory] = useState('All'); // Default category
+
+  const { book } = route.params || {};
+
+  const fetchBooksBySubject = async (subject) => {
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=subject:${subject}&startIndex=0&maxResults=40`
+      );
+      const data = await response.json();
+  
+      // If a single book is provided, add it to the list of books
+      if (book) {
+        setBooks((prevBooks) => {
+          const uniqueBooks = [...prevBooks, book, ...data.items].reduce(
+            (unique, item) => (unique.some((i) => i.id === item.id) ? unique : [...unique, item]),
+            []
+          );
+          return uniqueBooks;
+        });
+      } else {
+        setBooks((prevBooks) => {
+          const uniqueBooks = [...prevBooks, ...data.items].reduce(
+            (unique, item) => (unique.some((i) => i.id === item.id) ? unique : [...unique, item]),
+            []
+          );
+          return uniqueBooks;
+        });
+      }
+    } catch (error) {
+      console.error(`Error fetching books for subject ${subject}:`, error);
+    }
+  };
+  
+
+  useEffect(() => {
+    // Fetch books for different subjects
+    const subjects = ['Romance','Science Fiction', 'Mystery/Thriller', 'Horror','Fantasy', 'Historical Fiction','Autobiography',
+  'Poetry','Comedy','Travel'
+  ]; // Add more subjects as needed
+
+    subjects.forEach((subject) => {
+      fetchBooksBySubject(subject);
+    });
+  }, [book]);
+
   useEffect(() => {
     if (search === '') {
       setFiltered([]);
       return;
     }
-    const filteredBooks = books.filter(
+
+    // Ensure books is always an array
+    const booksArray = Array.isArray(books) ? books : [];
+    const filteredBooks = booksArray.filter(
       (book) =>
-        book.volumeInfo.title.toLowerCase().indexOf(search.toLowerCase()) !==
-        -1
+        book.volumeInfo.title.toLowerCase().indexOf(search.toLowerCase()) !== -1
     );
     setFiltered(filteredBooks);
   }, [search, books]);
 
-  useEffect(() => {
-    setBooks(book);
-  }, []);
-
   return (
     <View style={styles.container}>
-      <View style={{ borderRadius: 30, flexDirection: 'row', borderWidth:0.5,borderColor:'#666',backgroundColor: '#dfe4ea',alignItems:'center',padding:5}}>
+      <View style={{ borderRadius: 20, flexDirection: 'row', borderWidth:0.5,borderColor:'#666',backgroundColor: '#dfe4ea',alignItems:'center',padding:5}}>
         <Icon name='search' size={30} color='#666' />
         <TextInput
-          placeholder='Name of Book'
+          placeholder='Search for a book'
           placeholderTextColor='#666'
           onChangeText={(text) => setSearch(text)}
           value={search}
@@ -45,7 +88,8 @@ const Search = ({ route, navigation }) => {
         <ScrollView>
           {filtered.map((book) => (
             <TouchableOpacity style={styles.bb} onPress={() => {
-              navigation.navigate('Abook', { isbn: book?.selfLink });
+              navigation.navigate('Book Info', { isbn: book?.selfLink });
+              console.log(book?.selfLink);
             }}>
               <Image
                 source={{
@@ -54,7 +98,7 @@ const Search = ({ route, navigation }) => {
                     book?.volumeInfo?.imageLinks?.smallThumbnail ||
                     'https://dummyimage.com/100x100/000/fff',
                 }}
-                style={{ height: 200, width: 120 }}
+                style={{ height: 150, width: 120,borderRadius:10 }}
               />
               <View>
                 <View style={{ width: 220 }}>
@@ -68,9 +112,12 @@ const Search = ({ route, navigation }) => {
           ))}
         </ScrollView>
       ) : search.length > 0 ? (
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>No Books found</Text>
-        </View>
+        <View style={{ justifyContent: 'center', alignItems: 'center',marginTop:40}}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>
+          Oops...we didn't find anything{'\n'}that matches this search
+        </Text>
+      </View>
+      
       ) : <View />}
     </View>
   );
@@ -99,8 +146,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#666',
   },
   title: {
     fontSize: 15,
@@ -112,6 +157,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 5,
     color: '#666',
+    fontStyle: 'italic', // Add this property to make the text italic
+
   },
 });
 

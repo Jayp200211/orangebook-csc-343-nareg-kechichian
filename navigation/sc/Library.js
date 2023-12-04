@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity,ScrollView,Modal, TouchableHighlight, ActivityIndicator, TextInput} from 'react-native';
+import {  View, StyleSheet, Image, ImageBackground, TouchableOpacity,ScrollView,Modal, TouchableHighlight, ActivityIndicator, TextInput} from 'react-native';
 import Romance from './pictures/romance.jpg';
 import Fiction from './pictures/fiction.jpg';
 import Mystery from './pictures/mystery.jpg';
@@ -11,6 +11,7 @@ import Poetry from './pictures/poetry.jpg';
 import Comedy from './pictures/comedy.jpg';
 import Travel from './pictures/travel.jpg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Avatar, Button, Card, Text } from 'react-native-paper';
 
 const Library=({navigation})=>{
   const [loading, setLoading] = useState(true);
@@ -32,148 +33,166 @@ const Library=({navigation})=>{
   }, [type]);
   return(
     <View style={styles.container}>
-    <View style={{paddingTop:18}}>
+  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+    <TouchableOpacity
+      onPress={() => {
+        setType('romance');
+        setModalVisible(true);
+      }}
+    >
+      <View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginRight: 20, backgroundColor: 'rgba(255, 182, 193, 1)' }}>
+        <Card.Cover
+          source={Romance}
+          resizeMode="cover"
+          style={{ opacity: 0.7 }} // Adjust the opacity as needed
+        />
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(255, 182, 193, 0.4)' }}>
+          <Text style={{ color: 'white',fontWeight:'bold', fontSize: 16 }}>Romance</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      onPress={() => {
+        setType('science fiction');
+        setModalVisible(true);
+      }}
+    >
+      <View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={{
+            uri: 'https://th.bing.com/th/id/OIG.UCABG6FYxrr3lnq7dVvd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn'
+          }}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
+        />
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center',backgroundColor:'rgba(0, 0, 255, 0.3)' }}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Science Fiction</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+
+    {/* Repeat the same structure for other TouchableOpacity components */}
+
+    <TouchableOpacity
+      onPress={() => {
+        setType('horror');
+        setModalVisible(true);
+      }}
+    >
+      <View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginLeft: 20, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={Horror}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
+        />
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' ,backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Horror</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
     <TouchableOpacity onPress={()=>{
-      setType('romance');
-      setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Romance} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Romance}
-        style={styles.img}
-        />
-        <Text style={styles.txt}>Romance</Text>
-      </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
-      setType('science fiction');
-      setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Fiction} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Fiction}
-        style={styles.img}
-        />
-        <Text style={styles.txt}>Science Fiction</Text>
-      </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
-      setType('mystery');
-      setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Mystery} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Mystery}
-        style={styles.img}
-        />
-        <Text style={styles.txt}>Mystery/Thriller</Text>
-      </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
-      setType('horror');
-      setModalVisible(true);
-       }} style={{width:'100%'}}>
-    <ImageBackground source={Horror} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Horror}
-        style={styles.img}
-        />
-        <Text style={styles.txt}>Horror</Text>
-      </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
       setType('fantasy');
       setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Fantasy} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Fantasy}
-        style={styles.img}
+    }}>
+ <View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginLeft: 20, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={Fantasy}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
         />
-        <Text style={styles.txt}>Fantasy</Text>
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' ,backgroundColor: 'rgba(204, 204, 255, 0.3)'}}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Fantasy</Text>
+        </View>
       </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
+
+    </TouchableOpacity>
+  
+    <TouchableOpacity onPress={()=>{
       setType('historical fiction');
       setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={History} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={History}
-        style={styles.img}
+    }}>
+
+<View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginLeft: 20, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={History}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
         />
-        <Text style={styles.txt}>Historical Fiction</Text>
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' ,backgroundColor: 'rgba(255, 0, 0, 0.3)'}}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Historical Fiction</Text>
+        </View>
       </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
+    </TouchableOpacity>
+    <TouchableOpacity onPress={()=>{
       setType('autobiography');
       setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Auto} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Auto}
-        style={styles.img}
+    }}>
+<View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginLeft: 20, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={Auto}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
         />
-        <Text style={styles.txt}>Autobiography</Text>
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' ,backgroundColor: 'rgba(245, 245, 220, 0.3)'}}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Autobiography</Text>
+        </View>
       </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
+
+    </TouchableOpacity>
+
+    <TouchableOpacity onPress={()=>{
       setType('poetry');
       setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Poetry} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Poetry}
-        style={styles.img}
+    }} >
+<View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginLeft: 20, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={Poetry}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
         />
-        <Text style={styles.txt}>Poetry</Text>
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' ,backgroundColor: 'rgba(200, 162, 200, 0.3)'}}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Poetry</Text>
+        </View>
       </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
+
+    </TouchableOpacity>
+
+    <TouchableOpacity onPress={()=>{
       setType('comedy');
       setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Comedy} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Comedy}
-        style={styles.img}
+    }} >
+<View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginLeft: 20, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={Comedy}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
         />
-        <Text style={styles.txt}>Comedy</Text>
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' ,backgroundColor: '(255, 255, 0, 0.3)'}}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Comedy</Text>
+        </View>
       </View>
-      </ImageBackground>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
+
+
+    </TouchableOpacity>
+
+    <TouchableOpacity onPress={()=>{
       setType('travel');
       setModalVisible(true);
-    }} style={{width:'100%'}}>
-    <ImageBackground source={Travel} style={{opacity:1,marginTop:5}}>
-      <View style={styles.v}>
-        <Image
-        source={Travel}
-        style={styles.img}
+    }}>
+<View style={{ overflow: 'hidden', borderRadius: 24, width: 120, height: 120, marginLeft: 20, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <Card.Cover
+          source={Travel}
+          resizeMode="cover"
+          style={{ opacity: 0.3 }} // Adjust the opacity as needed
         />
-        <Text style={styles.txt}>Travel</Text>
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' ,backgroundColor: '(0, 128, 128, 0.3)'}}>
+          <Text style={{ color: 'white', fontSize: 16 ,fontWeight:'bold'}}>Travel</Text>
+        </View>
       </View>
-      </ImageBackground>
-      </TouchableOpacity>
-    </View>
+
+    </TouchableOpacity>
+  </ScrollView>
     <Modal
         animationType="slide"
         transparent={true}
@@ -209,26 +228,13 @@ const Library=({navigation})=>{
             </TouchableHighlight>
             <Text style={{fontSize:18,fontWeight:'bold',marginLeft:10,}}>{type.toUpperCase()}</Text>
             </View>
-            <TouchableOpacity 
-            style={{borderRadius:30,flexDirection:'row',borderWidth:0.5,borderColor:'#666',padding:5}}  
-            onPress={()=>{
-            setModalVisible(false);
-            navigation.navigate('Search',{book:books})
-            }}
-            >
-              <MaterialIcons name='search' size={30} color='#666'/>
-              <TextInput
-                placeholder='Name of Book'
-                placeholderTextColor='#666'
-                style={styles.srch}
-              />
-            </TouchableOpacity>
+           
           </View>
       <ScrollView>
         {books.map((book) => (
           <TouchableOpacity style={styles.bb} onPress={()=>{
             setModalVisible(false);
-            navigation.navigate('Abook',{isbn:book?.selfLink});
+            navigation.navigate('Book Info',{isbn:book?.selfLink});
           }}>
             <Image
               source={{
@@ -237,7 +243,7 @@ const Library=({navigation})=>{
                   book?.volumeInfo?.imageLinks?.smallThumbnail ||
                   'https://dummyimage.com/100x100/000/fff',
               }}
-              style={{ height: 200, width: 120 }}
+              style={{ height: 150, width: 120,borderRadius: 10 }}
             />
             <View>
               <View style={{ width: 220 }}>
@@ -259,8 +265,9 @@ const Library=({navigation})=>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#FFF',
     padding: 8,
+    marginTop:10,
   },
   img:{
     height:45,
@@ -286,8 +293,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#666',
   },
   title: {
     fontSize: 15,
@@ -299,6 +304,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 5,
     color: '#666',
+    fontStyle:'italic'
   },
   back:{
     borderRadius:30,

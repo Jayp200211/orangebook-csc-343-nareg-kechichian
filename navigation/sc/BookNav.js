@@ -8,7 +8,10 @@ const BookNav=()=>{
     return(
         <Stack.Navigator>
             <Stack.Screen name="Bookmarks" component={Bookmarks} options={{ headerShown: false }}/>
-            <Stack.Screen name="Bbook" component={Bbooks}/>
+            <Stack.Screen name="Bbook" component={Bbooks}
+              options={{ headerTitle: 'Book Info' }}
+
+            />
         </Stack.Navigator>
     )
 }

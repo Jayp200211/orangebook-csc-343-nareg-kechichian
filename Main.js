@@ -21,11 +21,11 @@ const Bar=({navigation})=>{
   };
 
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 ,backgroundColor:'#FFF'}}>
       <TouchableOpacity onPress={openDrawer}>
         <Ionicons name="menu" size={30} color="black" />
       </TouchableOpacity>
-      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Books.io</Text>
+      <Text style={{ fontSize: 20, fontWeight: 'bold' }}>NovelQuest</Text>
       <TouchableOpacity onPress={navigateToNotification}>
         <Ionicons name="notifications" size={30} color="black" />
       </TouchableOpacity>

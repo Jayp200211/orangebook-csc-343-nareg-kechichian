@@ -30,13 +30,13 @@ function DrawerContent(props) {
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="library" 
+                                name="magnify" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Library"
-                            onPress={() => {props.navigation.navigate('Library')}}
+                            label="Search"
+                            onPress={() => {props.navigation.navigate('Search')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

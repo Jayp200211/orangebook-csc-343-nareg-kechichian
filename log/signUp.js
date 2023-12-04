@@ -122,7 +122,6 @@ setConfirmError(null);
         firstName: name,
         lastName: Lname,
       });
-      alert(name);
       navigation.navigate("Pag");
     }
   } catch (error) {

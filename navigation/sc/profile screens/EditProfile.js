@@ -115,16 +115,7 @@ const EditProfile = ({ navigation }) => {
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
       >
-         <Svg xmlns="http://www.w3.org/2000/svg"  width={screenWidth}
-        height={screenHeight} version="1.1"
-       style={{ position: 'absolute', top: 0, left: 0, zIndex: -1 }}
-      >
-        <Rect x="0" y="0" width={screenWidth}
-        height={screenHeight} fill="#E6E5DE" />
-        <G transform="translate(400.5418090243755 800.9497294276979)">
-          <Path d="M312.4 -238.9C403.8 -134.5 476.1 -4.7 446.7 93.1C417.4 191 286.4 256.8 165.7 296.6C45.1 336.4 -65.1 350.2 -172.2 315C-279.3 279.7 -383.4 195.5 -400 98.3C-416.6 1.1 -345.7 -109 -264.5 -211.1C-183.2 -313.1 -91.6 -407.1 9.4 -414.6C110.5 -422.1 221 -343.2 312.4 -238.9" fill="#8E3200" />
-        </G>
-      </Svg>
+        
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -132,7 +123,7 @@ const EditProfile = ({ navigation }) => {
         >
           {/* <Text>fef</Text> */}
           <View style={styles.container}>
-          <Text style={{color:"#777777", marginLeft: 5,marginTop:-30,marginBottom:20}}>Provide details about yourself and any other pertinent information</Text>
+          <Text style={{color:"#777777", marginLeft: 16,marginTop:-30,marginBottom:20}}>Provide details about yourself and any other pertinent information</Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
@@ -153,17 +144,7 @@ const EditProfile = ({ navigation }) => {
                 right={<TextInput.Affix />}
               />
             </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                mode="outlined"
-                label="Email"
-                value={email}
-                onChangeText={setEmail}
-                right={<TextInput.Affix />}
-              />
-            </View>
-
+         
             <TouchableOpacity style={styles.but} onPress={saveChanges}>
               <Text style={styles.butText}>Save</Text>
             </TouchableOpacity>
@@ -181,7 +162,6 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   header: {
-    backgroundColor:"#E6E5DE",
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
@@ -211,8 +191,8 @@ closeButton: {
     borderRadius: 6,
   },
   but: {
-    borderRadius: 5,
-    backgroundColor: "#C38154",
+    borderRadius: 30,
+    backgroundColor: "#1DB954",
     height: 45,
     width: '90%',
     marginTop: 20,

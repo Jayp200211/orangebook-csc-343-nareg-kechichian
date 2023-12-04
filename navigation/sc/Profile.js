@@ -167,7 +167,7 @@ const takePicture = async () => {
     try {
       const result = await Share.share({
         message:
-          'OrangeBook is an application that stores all the books you search for.',
+          'NovelQuest is an application that stores all the books you search for.',
       });
 
       if (result.action === Share.sharedAction) {

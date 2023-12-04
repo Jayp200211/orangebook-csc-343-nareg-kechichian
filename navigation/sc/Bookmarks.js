@@ -43,7 +43,7 @@ export default function Bookmarks({navigation}){
                   book?.volumeInfo?.imageLinks?.smallThumbnail ||
                   'https://dummyimage.com/100x100/000/fff',
               }}
-              style={{ height: 200, width: 120 }}
+              style={{ height: 150, width: 120 ,borderRadius:10}}
             />
             <View>
               <View style={{ width: 220 }}>
@@ -60,7 +60,7 @@ export default function Bookmarks({navigation}){
     return(
         <View style={styles.container}>
             <View style={{justifyContent:'center',alignItems:'center'}}>
-                <Text style={{fontSize:20,fontWeight:'bold'}}>Bookmarks</Text>
+                <Text style={{fontSize:20,fontWeight:'bold',paddingTop:20}}>My Booklist</Text>
             </View>
             <ScrollView>
             {isbn.map((link) => (
@@ -101,18 +101,19 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#666',
       },
       title: {
         fontSize: 15,
-        textAlign: 'center',
+        textAlign: 'center', // or 'left', 'right', etc. based on your preference
         padding: 5,
         fontWeight: 'bold',
       },
+      
       author: {
         textAlign: 'center',
         padding: 5,
         color: '#666',
+        fontStyle: 'italic', // Add this property to make the text italic
+
       },
 })
